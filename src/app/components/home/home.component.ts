@@ -8,6 +8,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { JsonPipe } from '@angular/common';
 
 
 export interface Detallerevision {
@@ -111,7 +112,7 @@ const detallesRevision: Detallerevision[] = [
   {
     subcategoriaId: 16,
     subcategoria: "ESPEJO RETROVISOR",
-    estado:1,
+    estado:6,
     observacion: "lo que sea"
   }
 ]
@@ -122,7 +123,7 @@ const detallesRevision: Detallerevision[] = [
   selector: 'app-home',
   standalone: true,
   imports: [ReactiveFormsModule, FormsModule,MatIconModule, MatDividerModule, MatButtonModule,MatTableModule,MatSelectModule,
-    MatInputModule, MatFormFieldModule
+    MatInputModule, MatFormFieldModule, JsonPipe
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -142,7 +143,7 @@ export class HomeComponent implements OnInit {
   ){
 
     this.form = this.fb.group({
-      asignado: [3]
+      estado: this.fb.array( detallesRevision.map((item)=> this._createFormGroup(item)) ),
     })
 
   }
@@ -170,6 +171,17 @@ export class HomeComponent implements OnInit {
     console.log(this.form.value)
   }
 
+  private _createFormGroup( vehicle: Detallerevision ){
+
+    return this.fb.group(
+      {
+        subcategoriaId: vehicle.subcategoriaId,
+        subcategoria:   vehicle.subcategoria,
+        estado:         vehicle.estado,
+        observacion: vehicle.observacion
+      }
+    )
+  }
 
 
 
