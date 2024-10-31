@@ -40,12 +40,11 @@ export interface Revision {
 export interface Subcategoria {
     subcategoriaId?: number;
     subcategoria?:   string;
-    estado?:         number;
     detalles?:       Detalle[] | null;
 }
 
 export interface Detalle {
-    estado?:      number ;
+    estado:      number ;
     observacion?: null | string;
 }
 
@@ -60,8 +59,8 @@ export interface vehicleResp {
 export interface Detallerevision {
     subcategoriaId: number;
     subcategoria:   string;
-    estado:         number ;
     observacion:    string;
+    estado:number;
 }
 
 export interface LoginReq{

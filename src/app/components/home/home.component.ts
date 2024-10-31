@@ -9,7 +9,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { JsonPipe } from '@angular/common';
-import { VehiclesReq } from '../../interfaces/vehicle';
+import { Subcategoria, VehiclesReq } from '../../interfaces/vehicle';
 
 
 
@@ -26,6 +26,122 @@ export interface Detallerevision {
   estado:         number ;
   observacion:    string;
 }
+/* 
+const detallesRevision: Subcategoria[] = [
+  {
+    subcategoria: "LUZ DELANTERA",
+    subcategoriaId : 1,
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]
+  },
+  {
+    subcategoria: "LUZ TRASERA",
+    subcategoriaId : 2,
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]  },
+  {
+    subcategoria: "LUZ DE CUARTOS DELANTERO",
+    subcategoriaId : 3,
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]  },
+  {
+    subcategoria: "LUZ DE CUARTOS TRASERO",
+    subcategoriaId : 4,
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]  },
+  {
+    subcategoria: "LUZ DIRECCIONAL DERECHA DELANTERA",
+    subcategoriaId : 5,
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]  },
+  {
+    subcategoria: "LUZ DIRECCIONAL IZQUIERDA DELANTERA",
+    subcategoriaId : 6,
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]  },
+  {
+    subcategoria: "LUZ DIRECCIONAL DERECHA TRASERA",
+    subcategoriaId : 7,
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]  },
+  {
+    subcategoria: "LUZ DIRECCIONAL IZQUIERDA TRASERA",
+    subcategoriaId : 8,
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]  },
+  {
+    subcategoria: "LUCES PREVENTIVAS",
+    subcategoriaId : 9,
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]  },
+  {
+    subcategoriaId: 10,
+    subcategoria: "ASIENTOS DELANTEROS",
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]  },
+  {
+    subcategoriaId: 11,
+    subcategoria: "ASIENTOS TRASEROS",
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]  },
+  {
+    subcategoriaId: 12,
+    subcategoria: "VIDRIO FRENTE",
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]  },
+  {
+    subcategoriaId: 13,
+    subcategoria: "VIDRIO TRASERO",
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]  },
+  {
+    subcategoriaId: 14,
+    subcategoria: "ESPEJO LATERAL DERECHO",
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]  },
+  {
+    subcategoriaId: 15,
+    subcategoria: "ESPEJO LATERAL IZQUIERDO",
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]  },
+  {
+    subcategoriaId: 16,
+    subcategoria: "ESPEJO RETROVISOR",
+    detalles:[{
+      estado:1,
+      observacion: "Observacion por defecto"
+    }]  }
+] */
 
 const detallesRevision: Detallerevision[] = [
   {
@@ -37,92 +153,92 @@ const detallesRevision: Detallerevision[] = [
   {
     subcategoria: "LUZ TRASERA",
     subcategoriaId : 2,
-    estado:2,
-    observacion: "Observacion por defecto"
+      estado:1,
+      observacion: "Observacion por defecto"
   },
   {
     subcategoria: "LUZ DE CUARTOS DELANTERO",
     subcategoriaId : 3,
-    estado:1,
-    observacion: "Observacion por defecto"
+      estado:1,
+      observacion: "Observacion por defecto"
   },
   {
     subcategoria: "LUZ DE CUARTOS TRASERO",
     subcategoriaId : 4,
     estado:1,
     observacion: "Observacion por defecto"
-  },
+},
   {
     subcategoria: "LUZ DIRECCIONAL DERECHA DELANTERA",
     subcategoriaId : 5,
-    estado:1,
-    observacion: "Observacion por defecto"
+      estado:1,
+      observacion: "Observacion por defecto"
   },
   {
     subcategoria: "LUZ DIRECCIONAL IZQUIERDA DELANTERA",
     subcategoriaId : 6,
-    estado:1,
-    observacion: "Observacion por defecto"
+      estado:1,
+      observacion: "Observacion por defecto"
   },
   {
     subcategoria: "LUZ DIRECCIONAL DERECHA TRASERA",
     subcategoriaId : 7,
-    estado:1,
-    observacion: "Observacion por defecto"
+      estado:1,
+      observacion: "Observacion por defecto"
   },
   {
     subcategoria: "LUZ DIRECCIONAL IZQUIERDA TRASERA",
     subcategoriaId : 8,
-    estado:1,
-    observacion: "Observacion por defecto"
+      estado:1,
+      observacion: "Observacion por defecto"
   },
   {
     subcategoria: "LUCES PREVENTIVAS",
     subcategoriaId : 9,
-    estado:1,
-    observacion: "Observacion por defecto"
+      estado:1,
+      observacion: "Observacion por defecto"
   },
   {
     subcategoriaId: 10,
     subcategoria: "ASIENTOS DELANTEROS",
-    estado:1,
-    observacion: "Observacion por defecto"
+      estado:1,
+      observacion: "Observacion por defecto"
   },
   {
     subcategoriaId: 11,
     subcategoria: "ASIENTOS TRASEROS",
-    estado:1,
-    observacion: "Observacion por defecto"
+      estado:1,
+      observacion: "Observacion por defecto"
   },
   {
     subcategoriaId: 12,
     subcategoria: "VIDRIO FRENTE",
-    estado:1,
-    observacion: "Observacion por defecto"
+      estado:1,
+      observacion: "Observacion por defecto"
   },
   {
     subcategoriaId: 13,
     subcategoria: "VIDRIO TRASERO",
-    estado:1,
-    observacion: "Observacion por defecto"
-  },
+      estado:1,
+      observacion: "Observacion por defecto"
+   },
   {
     subcategoriaId: 14,
     subcategoria: "ESPEJO LATERAL DERECHO",
-    estado:1,
-    observacion: "Observacion por defecto"
-  },
+      estado:1,
+      observacion: "Observacion por defecto"
+   },
   {
     subcategoriaId: 15,
     subcategoria: "ESPEJO LATERAL IZQUIERDO",
-    estado:1,
-    observacion: "Observacion por defecto"
-  },
+      estado:1,
+      observacion: "Observacion por defecto"
+   },
   {
     subcategoriaId: 16,
     subcategoria: "ESPEJO RETROVISOR",
-    estado:6,
-    observacion: "Observacion por defecto"
+      estado:1,
+      observacion: "Observacion por defecto"
   }
 ]
 
@@ -186,7 +302,7 @@ export class HomeComponent implements OnInit {
     this._vehicleService.getVehicles().subscribe((data)=>{
 
       this.numerosDeInventario = data
-      console.log('this.numerosDeInventario',this.numerosDeInventario)
+
 
     })
   }
@@ -213,25 +329,33 @@ export class HomeComponent implements OnInit {
   }
 
   onOptionSelected(event: any) {
-    this.selectedVehicleId = event.option.value; // Almacena el valor seleccionado
+
+    this.selectedVehicleId = event.option.value; 
     console.log('ID seleccionado:', this.selectedVehicleId);
 
     this._vehicleService.getVehicle( Number(this.selectedVehicleId) ).subscribe((data)=>{
 
-      console.log(data)
+      for (let i = 0; i < detallesRevision.length; i++) {
 
+        detallesRevision[i].estado = data.revision![data.revision!.length-1].subcategorias![i].detalles![i].estado
+        console.log(data.revision![data.revision!.length-1].subcategorias![i].detalles![i].estado)
+        console.log( detallesRevision[i].estado )
+        
+      }
+      
       this.form = this.fb.group({
         estado: this.fb.array( detallesRevision.map((item)=> this._createFormGroup(item)) ),
         nombre_asignado: [data.asignado],
         marca: [data.marca],
         modelo: [data.modelo]
       });
+      
 
-      console.log('estad', this.form.value)
 
+      
     })
-
+    
     
   }
 
-}
+}document
