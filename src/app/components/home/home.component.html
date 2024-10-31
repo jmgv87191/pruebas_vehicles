@@ -1,6 +1,39 @@
-<form [formGroup]="form" >
 
+<form [formGroup]="form"  >
+  
+  <mat-form-field class="example-full-width">
+    <mat-label>Buscar</mat-label>
+    <input type="text"
+          placeholder="Pick one"
+          aria-label="Number"
+          matInput
+          [formControl]="myControl"
+          [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)" >
+      @for (option of filteredOptionsList | async; track option) {
+        <mat-option [value]="option.id">{{ option.id }} </mat-option>
+      }
+    </mat-autocomplete>
+  </mat-form-field>
 
+  <div class="cont_datos">
+
+    <mat-form-field>
+      <mat-label>Asignado</mat-label>
+      <input  formControlName='nombre_asignado' readonly matInput>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Marca</mat-label>
+      <input  formControlName='marca' readonly matInput>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Modelo</mat-label>
+      <input  formControlName='modelo' readonly matInput>
+    </mat-form-field>
+
+  </div>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" formArrayName="estado" >
 
@@ -9,11 +42,11 @@
           <td mat-cell *matCellDef="let element"> {{element.subcategoria}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="Calificacion">
-          <th mat-header-cell *matHeaderCellDef> Calificacion </th>
-          <td mat-cell *matCellDef="let element; let i = index" [formGroupName]="i" >    
+        <ng-container  matColumnDef="Calificacion">
+          <th  mat-header-cell *matHeaderCellDef> Calificacion </th>
+          <td mat-cell  *matCellDef="let element; let i = index" [formGroupName]="i" >    
                 <mat-form-field>
-                    <mat-label>Input</mat-label>
+                    <mat-label>Estado</mat-label>
                     <input formControlName="estado"  type="number" matInput>
                 </mat-form-field>
             </td>
@@ -21,8 +54,13 @@
 
         <ng-container matColumnDef="Observaciones">
           <th mat-header-cell *matHeaderCellDef> Observaciones </th>
-          <td mat-cell *matCellDef="let element"> {{element.observacion}} </td>
-        </ng-container>
+          <td mat-cell *matCellDef="let element; let i = index" [formGroupName]="i" >    
+            <mat-form-field>
+                <mat-label>Observaciones</mat-label>
+                <input formControlName="observacion"  type="text" matInput>
+            </mat-form-field>
+        </td>        
+      </ng-container>
     
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
@@ -31,6 +69,6 @@
     
 
 
-    <button class="btn btn-success" (click)="getVehicle(form.value.asignado)" >Agregar</button>
+    <button class="btn btn-success" (click)="calculate()" >Agregar</button>
 
   </form>

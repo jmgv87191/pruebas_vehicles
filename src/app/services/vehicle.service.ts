@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { LoginReq,LoginRes, VehiclesReq } from '../interfaces/vehicle';
+import { LoginReq,LoginRes, VehicleReq, vehicleResp, VehiclesReq } from '../interfaces/vehicle';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +34,7 @@ export class VehicleService {
     return this.http.get<VehiclesReq[]>(   (environment.endpoint + this.apiUrl), options )
   }
 
-  getVehicle( id:number ):Observable<VehiclesReq>{
+  getVehicle( id:number ):Observable<VehicleReq>{
 
     let miStorage = window.localStorage['token'];
 
@@ -45,7 +45,7 @@ export class VehicleService {
       }
     }
 
-    return this.http.get<VehiclesReq>(  (environment.endpoint + this.apiUrl+ "/" + id),options )
+    return this.http.get<VehicleReq>(  (environment.endpoint + this.apiUrl+ "/" + id),options )
   }
 
 
