@@ -8,7 +8,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { JsonPipe } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { Detallerevision, Subcategoria, VehicleReq, vehicleResp, VehiclesReq } from '../../interfaces/vehicle';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -22,228 +22,30 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth/services/auth.service';
 
-
-/* 
-const detallesRevision: Subcategoria[] = [
-  {
-    subcategoria: "LUZ DELANTERA",
-    subcategoriaId : 1,
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]
-  },
-  {
-    subcategoria: "LUZ TRASERA",
-    subcategoriaId : 2,
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]  },
-  {
-    subcategoria: "LUZ DE CUARTOS DELANTERO",
-    subcategoriaId : 3,
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]  },
-  {
-    subcategoria: "LUZ DE CUARTOS TRASERO",
-    subcategoriaId : 4,
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]  },
-  {
-    subcategoria: "LUZ DIRECCIONAL DERECHA DELANTERA",
-    subcategoriaId : 5,
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]  },
-  {
-    subcategoria: "LUZ DIRECCIONAL IZQUIERDA DELANTERA",
-    subcategoriaId : 6,
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]  },
-  {
-    subcategoria: "LUZ DIRECCIONAL DERECHA TRASERA",
-    subcategoriaId : 7,
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]  },
-  {
-    subcategoria: "LUZ DIRECCIONAL IZQUIERDA TRASERA",
-    subcategoriaId : 8,
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]  },
-  {
-    subcategoria: "LUCES PREVENTIVAS",
-    subcategoriaId : 9,
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]  },
-  {
-    subcategoriaId: 10,
-    subcategoria: "ASIENTOS DELANTEROS",
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]  },
-  {
-    subcategoriaId: 11,
-    subcategoria: "ASIENTOS TRASEROS",
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]  },
-  {
-    subcategoriaId: 12,
-    subcategoria: "VIDRIO FRENTE",
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]  },
-  {
-    subcategoriaId: 13,
-    subcategoria: "VIDRIO TRASERO",
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]  },
-  {
-    subcategoriaId: 14,
-    subcategoria: "ESPEJO LATERAL DERECHO",
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]  },
-  {
-    subcategoriaId: 15,
-    subcategoria: "ESPEJO LATERAL IZQUIERDO",
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]  },
-  {
-    subcategoriaId: 16,
-    subcategoria: "ESPEJO RETROVISOR",
-    detalles:[{
-      estado:1,
-      observacion: "Observacion por defecto"
-    }]  }
-] */
-
-const detallesRevision: Detallerevision[] = [
-  {
-    subcategoria: "LUZ DELANTERA",
-    subcategoriaId : 1,
-    estado:1,
-    observacion: "Observacion por defecto"
-  },
-  {
-    subcategoria: "LUZ TRASERA",
-    subcategoriaId : 2,
-      estado:1,
-      observacion: "Observacion por defecto"
-  },
-  {
-    subcategoria: "LUZ DE CUARTOS DELANTERO",
-    subcategoriaId : 3,
-      estado:1,
-      observacion: "Observacion por defecto"
-  },
-  {
-    subcategoria: "LUZ DE CUARTOS TRASERO",
-    subcategoriaId : 4,
-    estado:1,
-    observacion: "Observacion por defecto"
-},
-  {
-    subcategoria: "LUZ DIRECCIONAL DERECHA DELANTERA",
-    subcategoriaId : 5,
-      estado:1,
-      observacion: "Observacion por defecto"
-  },
-  {
-    subcategoria: "LUZ DIRECCIONAL IZQUIERDA DELANTERA",
-    subcategoriaId : 6,
-      estado:1,
-      observacion: "Observacion por defecto"
-  },
-  {
-    subcategoria: "LUZ DIRECCIONAL DERECHA TRASERA",
-    subcategoriaId : 7,
-      estado:1,
-      observacion: "Observacion por defecto"
-  },
-  {
-    subcategoria: "LUZ DIRECCIONAL IZQUIERDA TRASERA",
-    subcategoriaId : 8,
-      estado:1,
-      observacion: "Observacion por defecto"
-  },
-  {
-    subcategoria: "LUCES PREVENTIVAS",
-    subcategoriaId : 9,
-      estado:1,
-      observacion: "Observacion por defecto"
-  },
-  {
-    subcategoriaId: 10,
-    subcategoria: "ASIENTOS DELANTEROS",
-      estado:1,
-      observacion: "Observacion por defecto"
-  },
-  {
-    subcategoriaId: 11,
-    subcategoria: "ASIENTOS TRASEROS",
-      estado:1,
-      observacion: "Observacion por defecto"
-  },
-  {
-    subcategoriaId: 12,
-    subcategoria: "VIDRIO FRENTE",
-      estado:1,
-      observacion: "Observacion por defecto"
-  },
-  {
-    subcategoriaId: 13,
-    subcategoria: "VIDRIO TRASERO",
-      estado:1,
-      observacion: "Observacion por defecto"
-   },
-  {
-    subcategoriaId: 14,
-    subcategoria: "ESPEJO LATERAL DERECHO",
-      estado:1,
-      observacion: "Observacion por defecto"
-   },
-  {
-    subcategoriaId: 15,
-    subcategoria: "ESPEJO LATERAL IZQUIERDO",
-      estado:1,
-      observacion: "Observacion por defecto"
-   },
-  {
-    subcategoriaId: 16,
-    subcategoria: "ESPEJO RETROVISOR",
-      estado:1,
-      observacion: "Observacion por defecto"
-  }
-]
+    const detallesRevision: Detallerevision[] = [
+      { subcategoria: "LUZ DELANTERA", subcategoriaId: 1, estado: 1, observacion: "Observacion por defecto" },
+      { subcategoria: "LUZ TRASERA", subcategoriaId: 2, estado: 1, observacion: "Observacion por defecto" },
+      { subcategoria: "LUZ DE CUARTOS DELANTERO", subcategoriaId: 3, estado: 1, observacion: "Observacion por defecto" },
+      { subcategoria: "LUZ DE CUARTOS TRASERO", subcategoriaId: 4, estado: 1, observacion: "Observacion por defecto" },
+      { subcategoria: "LUZ DIRECCIONAL DERECHA DELANTERA", subcategoriaId: 5, estado: 1, observacion: "Observacion por defecto" },
+      { subcategoria: "LUZ DIRECCIONAL IZQUIERDA DELANTERA", subcategoriaId: 6, estado: 1, observacion: "Observacion por defecto" },
+      { subcategoria: "LUZ DIRECCIONAL DERECHA TRASERA", subcategoriaId: 7, estado: 1, observacion: "Observacion por defecto" },
+      { subcategoria: "LUZ DIRECCIONAL IZQUIERDA TRASERA", subcategoriaId: 8, estado: 1, observacion: "Observacion por defecto" },
+      { subcategoria: "LUCES PREVENTIVAS", subcategoriaId: 9, estado: 1, observacion: "Observacion por defecto" },
+      { subcategoriaId: 10, subcategoria: "ASIENTOS DELANTEROS", estado: 1, observacion: "Observacion por defecto" },
+      { subcategoriaId: 11, subcategoria: "ASIENTOS TRASEROS", estado: 1, observacion: "Observacion por defecto" },
+      { subcategoriaId: 12, subcategoria: "VIDRIO FRENTE", estado: 1, observacion: "Observacion por defecto" },
+      { subcategoriaId: 13, subcategoria: "VIDRIO TRASERO", estado: 1, observacion: "Observacion por defecto" },
+      { subcategoriaId: 14, subcategoria: "ESPEJO LATERAL DERECHO", estado: 1, observacion: "Observacion por defecto" },
+      { subcategoriaId: 15, subcategoria: "ESPEJO LATERAL IZQUIERDO", estado: 1, observacion: "Observacion por defecto" },
+      { subcategoriaId: 16, subcategoria: "ESPEJO RETROVISOR", estado: 1, observacion: "Observacion por defecto" }
+    ];
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [ReactiveFormsModule, FormsModule,MatIconModule, MatDividerModule, MatButtonModule,MatTableModule,MatSelectModule,
-    MatInputModule, MatFormFieldModule, JsonPipe, AsyncPipe, MatAutocompleteModule,MatMenuModule, MatToolbarModule
+    MatInputModule, MatFormFieldModule, JsonPipe, AsyncPipe, MatAutocompleteModule,MatMenuModule, MatToolbarModule, CommonModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 
@@ -254,7 +56,7 @@ const detallesRevision: Detallerevision[] = [
 export class HomeComponent implements OnInit {
 
   form: FormGroup;
-  estado:number = 0
+  estado:number = 2
   numerosDeInventario:  VehiclesReq[] = []
   myControl = new FormControl('');
   filteredOptionsList: Observable<VehiclesReq[]> | undefined;
@@ -280,10 +82,11 @@ export class HomeComponent implements OnInit {
       nombre_asignado: [""],
       marca:[""],
       modelo:[""],
-      date: [''], // Asegúrate de que el control 'date' esté definido aquí
+      date: [''],
 
     })
   }
+
   ngOnInit(): void {
 
     this.getVehicles();
@@ -306,7 +109,6 @@ export class HomeComponent implements OnInit {
     return this.numerosDeInventario.filter(option => String(option.id).includes(filterValue));
   }
 
-
   getVehicles(){
     this._vehicleService.getVehicles().subscribe((data)=>{
 
@@ -314,7 +116,6 @@ export class HomeComponent implements OnInit {
 
     })
   }
-
 
   private _createFormGroup( vehicle: Detallerevision ){
 
@@ -329,7 +130,6 @@ export class HomeComponent implements OnInit {
   }
 
   enviar(){
-
     
     this.agregarRevision ={
       inventarioId: this.vehicleReq.id,
@@ -343,7 +143,6 @@ export class HomeComponent implements OnInit {
       console.log("revision agregada")
 
     })
-
 
   }
 
@@ -364,10 +163,9 @@ export class HomeComponent implements OnInit {
         
         detallesRevision[i].estado = data.revision![data.revision!.length-1].subcategorias![i].detalles![i].estado
         detallesRevision[i].observacion = data.revision![data.revision!.length-1].subcategorias![i].detalles![i].observacion! 
-
-      
       }
       
+
       this.form = this.fb.group({
         estado: this.fb.array( detallesRevision.map((item)=> this._createFormGroup(item)) ),
         nombre_asignado: [data.asignado],
@@ -376,10 +174,8 @@ export class HomeComponent implements OnInit {
       });
       
 
-
       
     })
-    
     
   }
 
@@ -388,4 +184,21 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/'])
   }
 
-}document
+  sumar(valor: number, index: number) {
+
+    let nuevoEstado = this.productFormArray.value[index].estado + valor;
+  
+    if (nuevoEstado < 1) {
+      nuevoEstado = 1;
+      
+    } else if (nuevoEstado > 3) {
+      nuevoEstado = 3;
+    }
+  
+    this.productFormArray.value[index].estado = nuevoEstado;  
+
+    console.log(this.productFormArray.value[index])
+
+  }
+
+}
