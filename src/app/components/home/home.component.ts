@@ -9,7 +9,9 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { JsonPipe } from '@angular/common';
-import { Subcategoria, VehiclesReq } from '../../interfaces/vehicle';
+import { Detallerevision, Subcategoria, VehicleReq, vehicleResp, VehiclesReq } from '../../interfaces/vehicle';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatToolbarModule} from '@angular/material/toolbar';
 
 
 
@@ -17,15 +19,10 @@ import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {AsyncPipe} from '@angular/common';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { Router } from '@angular/router';
+import { AuthService } from '../../auth/services/auth.service';
 
 
-
-export interface Detallerevision {
-  subcategoriaId: number;
-  subcategoria:   string;
-  estado:         number ;
-  observacion:    string;
-}
 /* 
 const detallesRevision: Subcategoria[] = [
   {
@@ -246,7 +243,7 @@ const detallesRevision: Detallerevision[] = [
   selector: 'app-home',
   standalone: true,
   imports: [ReactiveFormsModule, FormsModule,MatIconModule, MatDividerModule, MatButtonModule,MatTableModule,MatSelectModule,
-    MatInputModule, MatFormFieldModule, JsonPipe, AsyncPipe, MatAutocompleteModule
+    MatInputModule, MatFormFieldModule, JsonPipe, AsyncPipe, MatAutocompleteModule,MatMenuModule, MatToolbarModule
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 
@@ -261,27 +258,39 @@ export class HomeComponent implements OnInit {
   numerosDeInventario:  VehiclesReq[] = []
   myControl = new FormControl('');
   filteredOptionsList: Observable<VehiclesReq[]> | undefined;
-
+  today="";
+  usuario: string | null = "";
+  agregarRevision!: vehicleResp;
+  vehicleReq!: VehicleReq;
   displayedColumns: string[] = [ 'Subcategoria', 'Calificacion', 'Observaciones'];
   dataSource = detallesRevision;
-
   selectedVehicleId: string = ''
+  isStyled: boolean = false;
 
 
   constructor(  
     private fb:FormBuilder,
-    private _vehicleService: VehicleService
+    private _vehicleService: VehicleService,
+    private router: Router,
+    private _authService:AuthService,
+
   ){
     this.form = this.fb.group({
       estado: this.fb.array( detallesRevision.map((item)=> this._createFormGroup(item)) ),
       nombre_asignado: [""],
       marca:[""],
-      modelo:[""]
+      modelo:[""],
+      date: [''], // Asegúrate de que el control 'date' esté definido aquí
+
     })
   }
   ngOnInit(): void {
 
     this.getVehicles();
+
+    this.today = new Date().toISOString().split('T')[0]; 
+    this.form.controls['date'].setValue(this.today);
+    this.usuario = localStorage.getItem('usuario')
 
 
     this.filteredOptionsList = this.myControl.valueChanges.pipe(
@@ -303,7 +312,6 @@ export class HomeComponent implements OnInit {
 
       this.numerosDeInventario = data
 
-
     })
   }
 
@@ -320,8 +328,23 @@ export class HomeComponent implements OnInit {
     )
   }
 
-  calculate(){
-    console.log( this.productFormArray.value )
+  enviar(){
+
+    
+    this.agregarRevision ={
+      inventarioId: this.vehicleReq.id,
+      funcionarioId: Number(this.vehicleReq.revision![0].funcionarioId),
+      userId: this.vehicleReq.userId,  
+      fecha: this.today,
+      detallerevision:this.productFormArray.value
+    } 
+    
+    this._vehicleService.addInspection( this.agregarRevision ).subscribe((data)=>{
+      console.log("revision agregada")
+
+    })
+
+
   }
 
   get productFormArray(){
@@ -335,12 +358,14 @@ export class HomeComponent implements OnInit {
 
     this._vehicleService.getVehicle( Number(this.selectedVehicleId) ).subscribe((data)=>{
 
+      this.vehicleReq = data
+      
       for (let i = 0; i < detallesRevision.length; i++) {
-
-        detallesRevision[i].estado = data.revision![data.revision!.length-1].subcategorias![i].detalles![i].estado
-        console.log(data.revision![data.revision!.length-1].subcategorias![i].detalles![i].estado)
-        console.log( detallesRevision[i].estado )
         
+        detallesRevision[i].estado = data.revision![data.revision!.length-1].subcategorias![i].detalles![i].estado
+        detallesRevision[i].observacion = data.revision![data.revision!.length-1].subcategorias![i].detalles![i].observacion! 
+
+      
       }
       
       this.form = this.fb.group({
@@ -356,6 +381,11 @@ export class HomeComponent implements OnInit {
     })
     
     
+  }
+
+  onLogout(){
+    this._authService.logOut();
+    this.router.navigate(['/'])
   }
 
 }document

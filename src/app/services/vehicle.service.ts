@@ -48,6 +48,20 @@ export class VehicleService {
     return this.http.get<VehicleReq>(  (environment.endpoint + this.apiUrl+ "/" + id),options )
   }
 
+  addInspection( form: vehicleResp ):Observable<void>{
+
+    let miStorage = window.localStorage['token'];
+
+    const options = {
+      method: 'GET',
+      headers:{
+        Authorization: `Bearer ${miStorage}`
+      }
+    }
+
+    return this.http.post<void>( (environment.endpoint + this.apiUrl), form, options  )
+  }
+
 
 }
 
