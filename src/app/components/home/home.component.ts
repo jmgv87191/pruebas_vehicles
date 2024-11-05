@@ -1,5 +1,5 @@
 import { Component, OnInit,ChangeDetectionStrategy } from '@angular/core';
-import { FormGroup, FormsModule, ReactiveFormsModule, Validators, FormBuilder,FormControl } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule, Validators, FormBuilder,FormControl, FormArray } from '@angular/forms';
 import { VehicleService } from '../../services/vehicle.service';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
@@ -146,9 +146,11 @@ export class HomeComponent implements OnInit {
 
   }
 
-  get productFormArray(){
-    return this.form.controls['estado']
-  }
+// Cambia esto para asegurarte de que el tipo es correcto
+get productFormArray() {
+  return this.form.get('estado') as FormArray; // Aquí le decimos explícitamente que es un FormArray
+}
+
 
   onOptionSelected(event: any) {
 
@@ -184,21 +186,37 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/'])
   }
 
-  sumar(valor: number, index: number) {
+sumar(valor: number, index: number) {
+  const formArray = this.productFormArray;
 
-    let nuevoEstado = this.productFormArray.value[index].estado + valor;
-  
-    if (nuevoEstado < 1) {
-      nuevoEstado = 1;
-      
-    } else if (nuevoEstado > 3) {
-      nuevoEstado = 3;
+  // Asegurarse de que el índice exista en el FormArray
+  if (formArray && formArray.at(index)) {
+    const estadoControl = formArray.at(index).get('estado') as FormControl;
+
+    // Solo si estadoControl no es undefined
+    if (estadoControl) {
+      let nuevoEstado = estadoControl.value + valor;
+
+      // Se asegura de que el estado esté dentro de los límites (1 a 3)
+      if (nuevoEstado < 1) {
+        nuevoEstado = 1;
+      } else if (nuevoEstado > 3) {
+        nuevoEstado = 3;
+      }
+
+      // Actualiza el valor del control 'estado'
+      estadoControl.setValue(nuevoEstado);
+
+      console.log(`Nuevo estado en el índice ${index}:`, nuevoEstado);
+    } else {
+      console.error('El control "estado" no está definido para el índice', index);
     }
-  
-    this.productFormArray.value[index].estado = nuevoEstado;  
-
-    console.log(this.productFormArray.value[index])
-
+  } else {
+    console.error('El índice no existe en el FormArray:', index);
   }
+}
+
+  
+  
 
 }
