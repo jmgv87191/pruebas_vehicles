@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit {
   dataSource = detallesRevision;
   selectedVehicleId: string = ''
   isStyled: boolean = false;
-
+  nuevoEstado: number = 1;
 
   constructor(  
     private fb:FormBuilder,
@@ -146,11 +146,9 @@ export class HomeComponent implements OnInit {
 
   }
 
-// Cambia esto para asegurarte de que el tipo es correcto
 get productFormArray() {
-  return this.form.get('estado') as FormArray; // Aquí le decimos explícitamente que es un FormArray
+  return this.form.get('estado') as FormArray;
 }
-
 
   onOptionSelected(event: any) {
 
@@ -195,19 +193,19 @@ sumar(valor: number, index: number) {
 
     // Solo si estadoControl no es undefined
     if (estadoControl) {
-      let nuevoEstado = estadoControl.value + valor;
+      this.nuevoEstado = estadoControl.value + valor;
 
       // Se asegura de que el estado esté dentro de los límites (1 a 3)
-      if (nuevoEstado < 1) {
-        nuevoEstado = 1;
-      } else if (nuevoEstado > 3) {
-        nuevoEstado = 3;
+      if (this.nuevoEstado < 1) {
+        this.nuevoEstado = 1;
+      } else if (this.nuevoEstado > 3) {
+        this.nuevoEstado = 3;
       }
 
       // Actualiza el valor del control 'estado'
-      estadoControl.setValue(nuevoEstado);
+      estadoControl.setValue(this.nuevoEstado);
 
-      console.log(`Nuevo estado en el índice ${index}:`, nuevoEstado);
+      console.log(`Nuevo estado en el índice ${index}:`, this.nuevoEstado);
     } else {
       console.error('El control "estado" no está definido para el índice', index);
     }
