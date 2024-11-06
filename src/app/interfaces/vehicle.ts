@@ -25,7 +25,7 @@ export interface VehicleReq {
     nota?:          string;
     color:         string;
     userId: number;
-    revision?:      Revision[];
+    revision:      Revision[];
 }
 
 export interface Revision {
@@ -33,19 +33,20 @@ export interface Revision {
     funcionarioId?:    string;
     funcionario?:      string;
     "fecha revision": Date;
-    subcategorias?:    Subcategoria[];
+    detalles:    Subcategoria[];
     
 }
 
 export interface Subcategoria {
     subcategoriaId?: number;
     subcategoria?:   string;
-    detalles?:       Detalle[] | null;
+    estado:      number ;
+    observacion: string;
 }
 
 export interface Detalle {
     estado:      number ;
-    observacion?: null | string;
+    observacion: string;
 }
 
 export interface vehicleResp {

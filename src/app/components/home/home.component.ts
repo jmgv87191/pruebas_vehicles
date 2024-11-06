@@ -91,6 +91,7 @@ export class HomeComponent implements OnInit {
 
     this.getVehicles();
 
+
     this.today = new Date().toISOString().split('T')[0]; 
     this.form.controls['date'].setValue(this.today);
     this.usuario = localStorage.getItem('usuario')
@@ -158,22 +159,20 @@ get productFormArray() {
     this._vehicleService.getVehicle( Number(this.selectedVehicleId) ).subscribe((data)=>{
 
       this.vehicleReq = data
+
       
       for (let i = 0; i < detallesRevision.length; i++) {
         
-        detallesRevision[i].estado = data.revision![data.revision!.length-1].subcategorias![i].detalles![i].estado
-        detallesRevision[i].observacion = data.revision![data.revision!.length-1].subcategorias![i].detalles![i].observacion! 
+        detallesRevision[i].estado = data.revision[data.revision.length-1].detalles[i].estado
+        detallesRevision[i].observacion = data.revision[data.revision.length-1].detalles[i].observacion 
       }
       
-
       this.form = this.fb.group({
         estado: this.fb.array( detallesRevision.map((item)=> this._createFormGroup(item)) ),
         nombre_asignado: [data.asignado],
         marca: [data.marca],
         modelo: [data.modelo]
       });
-      
-
       
     })
     
@@ -184,35 +183,32 @@ get productFormArray() {
     this.router.navigate(['/'])
   }
 
-sumar(valor: number, index: number) {
-  const formArray = this.productFormArray;
-
-  // Asegurarse de que el índice exista en el FormArray
-  if (formArray && formArray.at(index)) {
-    const estadoControl = formArray.at(index).get('estado') as FormControl;
-
-    // Solo si estadoControl no es undefined
-    if (estadoControl) {
-      this.nuevoEstado = estadoControl.value + valor;
-
-      // Se asegura de que el estado esté dentro de los límites (1 a 3)
-      if (this.nuevoEstado < 1) {
-        this.nuevoEstado = 1;
-      } else if (this.nuevoEstado > 3) {
-        this.nuevoEstado = 3;
+  sumar(valor: number, index: number) {
+    const formArray = this.productFormArray;
+  
+    if (formArray && formArray.at(index)) {
+      const estadoControl = formArray.at(index).get('estado') as FormControl;
+  
+      if (estadoControl) {
+        this.nuevoEstado = estadoControl.value + valor;
+  
+        // Asegurarse de que el estado esté dentro de los límites (1 a 3)
+        if (this.nuevoEstado < 1) {
+          this.nuevoEstado = 1;
+        } else if (this.nuevoEstado > 3) {
+          this.nuevoEstado = 3;
+        }
+  
+        estadoControl.setValue(this.nuevoEstado);
+        console.log(`Nuevo estado en el índice ${index}:`, this.nuevoEstado);
+      } else {
+        console.error('El control "estado" no está definido para el índice', index);
       }
-
-      // Actualiza el valor del control 'estado'
-      estadoControl.setValue(this.nuevoEstado);
-
-      console.log(`Nuevo estado en el índice ${index}:`, this.nuevoEstado);
     } else {
-      console.error('El control "estado" no está definido para el índice', index);
+      console.error('El índice no existe en el FormArray:', index);
     }
-  } else {
-    console.error('El índice no existe en el FormArray:', index);
   }
-}
+  
 
   
   
